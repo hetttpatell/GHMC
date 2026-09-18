@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'ario-sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Helvetica/Helvetica-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'ario-sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Helvetica/Helvetica-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'ario-sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/Helvetica/Helvetica-Light.woff') format('woff');
+}
+
+@theme {
+  --color-brand-purple: #372C5F;
+  --color-brand-dark: #12101E;
+  --color-brand-blue: #1d4e8b;
+  --font-sans: 'ario-sans', sans-serif;
+  --font-luxury: 'ario-sans', sans-serif;
+}
+
+@layer base {
+  :root {
+    --primary-white: #ffffff;
+    --primary-dark: #020202;
+    --font-sans: 'ario-sans', sans-serif;
+    --font-luxury: 'ario-sans', sans-serif;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html {
+    font-family: 'ario-sans', sans-serif;
+    color: var(--primary-dark);
+    background-color: var(--primary-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    overflow-x: hidden;
+    background-color: var(--primary-white);
+    color: var(--primary-dark);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  img, video {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background: rgba(55, 44, 95, 0.15);
+    color: #372C5F;
+  }
+}
+
+@layer utilities {
+  .te-h1 {
+    font-size: clamp(3.75rem, 16vw, 17rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.82;
+  }
+
+  .te-headline {
+    font-size: clamp(1.15rem, 3.2vw, 2.35rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.25;
+  }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
