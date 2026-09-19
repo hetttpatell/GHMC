@@ -241,7 +241,7 @@ export default function CaseStudies() {
     <section
       id="case-studies"
       ref={sectionRef}
-      className="relative w-full overflow-hidden select-none bg-transparent text-[#020202] py-20 sm:py-28 lg:py-36"
+      className="relative w-full overflow-x-clip bg-transparent text-[#020202] py-20 sm:py-28 lg:py-36"
     >
       {/* ── Background Decorative Ambient Elements (Matching AboutUsSection) ── */}
       <div

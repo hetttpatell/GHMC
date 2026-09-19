@@ -276,7 +276,7 @@ const Hero = ({ introDone = false }) => {
   }, []);
 
   return (
-    <div id="hero" className="hero-scroll-wrapper relative w-full overflow-x-hidden">
+    <div id="hero" className="hero-scroll-wrapper relative w-full overflow-x-clip">
       {/* ──────────────────────────────────────────────────────────────────────────
           1. MOBILE HERO VIEW — Assembled like Reference Photo (Ario Law Mobile)
           - Header: Managed by interactive GHMC Navbar
@@ -285,7 +285,7 @@ const Hero = ({ introDone = false }) => {
           - Video (NO border)
           - Supporting copy ("We help organisations...") + CTA button
           ────────────────────────────────────────────────────────────────────────── */}
-      <section className="block md:hidden relative w-full min-h-screen bg-white text-black px-5 pt-24 pb-16 overflow-hidden select-none">
+      <section className="block md:hidden relative w-full min-h-screen bg-white text-black px-5 pt-24 pb-16 overflow-x-clip">
         {/* Floating Paths subtle background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30">
           <FloatingPathsBackground className="absolute inset-0" />

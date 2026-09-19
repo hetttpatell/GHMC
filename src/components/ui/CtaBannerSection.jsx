@@ -78,7 +78,7 @@ export default function CtaBannerSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative w-full overflow-hidden select-none"
+      className="relative w-full overflow-x-clip"
       style={{
         background: 'linear-gradient(135deg, #372C5F 0%, #292147 50%, #1c1533 100%)',
       }}

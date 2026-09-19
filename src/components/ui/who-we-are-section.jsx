@@ -303,7 +303,7 @@ export default function WhoWeAreSection() {
     <section
       id="who-we-are"
       ref={sectionRef}
-      className="relative w-full overflow-hidden select-none bg-transparent text-[#020202]"
+      className="relative w-full overflow-x-clip bg-transparent text-[#020202]"
     >
       <div className="relative z-10 py-24 sm:py-32 lg:py-40 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-7xl mx-auto">
         {/* ── WHO WE ARE Label + Divider Line (extends to whole screen) ── */}

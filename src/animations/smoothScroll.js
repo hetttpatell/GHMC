@@ -5,31 +5,76 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Initialise Lenis smooth scroll and synchronise it with GSAP's ticker
- * so that ScrollTrigger stays in lock-step with the smoothed scroll position.
+ * Initialise Lenis smooth scroll for desktop screens (>= 768px) and synchronise
+ * it with GSAP's ticker so that ScrollTrigger stays in lock-step.
+ *
+ * On mobile/touch screens (< 768px), Lenis is disabled so that native
+ * hardware-accelerated momentum touch scrolling works without event interception.
  */
 export function initSmoothScroll() {
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-  });
+  if (typeof window === 'undefined') {
+    return {
+      lenis: null,
+      destroy() {},
+    };
+  }
 
-  // Keep ScrollTrigger in sync with Lenis
-  lenis.on('scroll', ScrollTrigger.update);
+  let lenisInstance = null;
+  let updateTicker = null;
 
-  const updateTicker = (time) => {
-    lenis.raf(time * 1000);
+  const startLenis = () => {
+    if (lenisInstance) return;
+
+    lenisInstance = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: false,
+    });
+
+    lenisInstance.on('scroll', ScrollTrigger.update);
+
+    updateTicker = (time) => {
+      lenisInstance?.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
   };
 
-  gsap.ticker.add(updateTicker);
-  gsap.ticker.lagSmoothing(0);
+  const stopLenis = () => {
+    if (!lenisInstance) return;
+
+    if (updateTicker) {
+      gsap.ticker.remove(updateTicker);
+      updateTicker = null;
+    }
+
+    lenisInstance.destroy();
+    lenisInstance = null;
+    document.documentElement.classList.remove('lenis', 'lenis-smooth', 'lenis-stopped');
+    ScrollTrigger.refresh();
+  };
+
+  const checkViewport = () => {
+    if (window.innerWidth >= 768) {
+      startLenis();
+    } else {
+      stopLenis();
+    }
+  };
+
+  checkViewport();
+  window.addEventListener('resize', checkViewport);
 
   return {
-    lenis,
+    get lenis() {
+      return lenisInstance;
+    },
     destroy() {
-      gsap.ticker.remove(updateTicker);
-      lenis.destroy();
+      window.removeEventListener('resize', checkViewport);
+      stopLenis();
     },
   };
 }
+

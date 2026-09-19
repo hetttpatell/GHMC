@@ -329,7 +329,7 @@ export default function AboutUsSection() {
     <section
       id="impact"
       ref={sectionRef}
-      className="relative w-full py-28 sm:py-36 lg:py-44 px-4 sm:px-8 md:px-12 lg:px-20 bg-transparent text-[#020202] overflow-hidden select-none"
+      className="relative w-full py-28 sm:py-36 lg:py-44 px-4 sm:px-8 md:px-12 lg:px-20 bg-transparent text-[#020202] overflow-x-clip"
     >
       {/* ── Background Decorative Ambient Elements (Parallax Orbs) ── */}
       <div

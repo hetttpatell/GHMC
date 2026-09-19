@@ -22,19 +22,27 @@ const Preloader = ({ onComplete }) => {
   const letterRefs = useRef([]);
 
   useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.body.style.overflow = originalOverflow;
+    const restoreScroll = () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       setMounted(false);
       if (onComplete) onComplete();
+      ScrollTrigger.refresh();
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      restoreScroll();
       return;
     }
 
     const animTimer = setTimeout(() => {
       const letters = letterRefs.current.filter(Boolean);
-      if (letters.length !== 4) return;
+      if (letters.length !== 4) {
+        restoreScroll();
+        return;
+      }
 
       const vw = window.innerWidth;
       const vh = window.innerHeight;
@@ -61,7 +69,7 @@ const Preloader = ({ onComplete }) => {
       // Intermediate waypoints
       const M_br = offsetTo(2, vw - mx - rects[2].width, vh - my - rects[2].height); // M at bottom-right
       const C_tr = offsetTo(3, vw - mx - rects[3].width, my);                         // C at top-right
-      const C_br = offsetTo(3, vw - mx - rects[3].width, vh - my - rects[3].height); // C at bottom-right
+      const C_br = offsetTo(3, vw - mx - rects[3].width, vh - my - rects[2].height); // C at bottom-right
 
       const ctx = gsap.context(() => {
         gsap.set(containerRef.current, { clipPath: 'inset(0% 0% 0% 0%)' });
@@ -73,9 +81,7 @@ const Preloader = ({ onComplete }) => {
 
         const tl = gsap.timeline({
           onComplete: () => {
-            document.body.style.overflow = originalOverflow;
-            setMounted(false);
-            if (onComplete) onComplete();
+            restoreScroll();
           },
         });
 
@@ -111,7 +117,8 @@ const Preloader = ({ onComplete }) => {
 
     return () => {
       clearTimeout(animTimer);
-      document.body.style.overflow = originalOverflow;
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
   }, [onComplete]);
 

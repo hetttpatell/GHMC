@@ -34,7 +34,7 @@ const Home = () => {
       <Preloader onComplete={() => setIntroDone(true)} />
 
       {/* ── Main Site Content ── */}
-      <main className="relative w-full overflow-hidden">
+      <main className="relative w-full overflow-x-clip">
         {/* ── Global Interactive Scroll-Sensitive Background Thread (single line) ── */}
         <ScrollThread />
 
