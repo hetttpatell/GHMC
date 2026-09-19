@@ -63,6 +63,8 @@ export default function ScrollThread() {
 
   // Measure parent document dimensions and generate spline
   useEffect(() => {
+    let timeoutId = null;
+
     const updateDimensions = () => {
       const parent = containerRef.current?.parentElement || document.body;
       const w = Math.max(window.innerWidth, parent.clientWidth || 1440);
@@ -74,18 +76,16 @@ export default function ScrollThread() {
 
     updateDimensions();
 
-    const resizeObserver = new ResizeObserver(() => {
-      updateDimensions();
-    });
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(updateDimensions, 150);
+    };
 
-    if (containerRef.current?.parentElement) {
-      resizeObserver.observe(containerRef.current.parentElement);
-    }
-    window.addEventListener('resize', updateDimensions);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', updateDimensions);
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -127,7 +127,7 @@ export default function ScrollThread() {
           trigger: parent,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.8,
+          scrub: 0.25,
           onUpdate: (self) => {
             const p = self.progress;
             const currentOffset = length * (1 - p);
@@ -216,10 +216,7 @@ export default function ScrollThread() {
             strokeWidth="1.8"
             strokeLinecap="round"
             fill="none"
-            style={{
-              willChange: 'stroke-dashoffset',
-              transition: 'stroke-dashoffset 0.05s linear',
-            }}
+            style={{ willChange: 'stroke-dashoffset' }}
           />
         )}
 

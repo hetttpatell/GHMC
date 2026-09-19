@@ -26,7 +26,7 @@ export function initSmoothScroll() {
     if (lenisInstance) return;
 
     lenisInstance = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       syncTouch: false,
@@ -39,7 +39,7 @@ export function initSmoothScroll() {
     };
 
     gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(500, 33);
   };
 
   const stopLenis = () => {
