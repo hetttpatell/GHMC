@@ -270,7 +270,7 @@ const Hero = ({ introDone = false }) => {
 
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
-    }, heroRef);
+    }, heroEl);
 
     return () => ctx.revert();
   }, []);

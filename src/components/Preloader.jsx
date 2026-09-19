@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * 4-Corner Letter Preloader for GHMC
@@ -110,7 +113,7 @@ const Preloader = ({ onComplete }) => {
           duration: 0.9,
           ease: 'power3.inOut',
         });
-      }, containerRef);
+      }, containerRef.current || undefined);
 
       return () => ctx.revert();
     }, 50);
