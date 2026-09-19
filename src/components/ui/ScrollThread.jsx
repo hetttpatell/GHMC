@@ -26,24 +26,21 @@ export default function ScrollThread() {
 
   // Generate an organic, flowing serpentine cubic Bezier spline
   const generateSpline = (w, h) => {
-    const isMobile = w < 768;
-    // Spacing between vertical wave inflection points (~550px on mobile, ~700px-900px on desktop)
-    const targetStep = isMobile ? Math.max(500, Math.min(750, h / 8)) : Math.max(650, Math.min(880, h / 7));
+    // Spacing between vertical wave inflection points (~700px to ~900px)
+    const targetStep = Math.max(650, Math.min(880, h / 7));
     const count = Math.max(5, Math.floor(h / targetStep));
     const actualStep = h / count;
 
     // Organic wave distribution fractions across viewport width (weaving between left, center, right)
-    const xFractions = isMobile
-      ? [0.82, 0.18, 0.78, 0.22, 0.80, 0.20, 0.75, 0.25]
-      : [0.72, 0.28, 0.82, 0.30, 0.22, 0.78, 0.36, 0.68, 0.48];
+    const xFractions = [0.72, 0.28, 0.82, 0.30, 0.22, 0.78, 0.36, 0.68, 0.48];
 
     const points = [];
     for (let i = 0; i <= count; i++) {
       const y = i === 0 ? 80 : i === count ? h : i * actualStep;
       const frac = xFractions[i % xFractions.length];
       // Keep margin away from extreme screen edges
-      const minX = isMobile ? Math.max(20, w * 0.08) : Math.max(48, w * 0.08);
-      const maxX = isMobile ? Math.min(w - 20, w * 0.92) : Math.min(w - 48, w * 0.92);
+      const minX = Math.max(48, w * 0.08);
+      const maxX = Math.min(w - 48, w * 0.92);
       const x = Math.max(minX, Math.min(maxX, w * frac));
       points.push({ x, y });
     }
@@ -64,13 +61,11 @@ export default function ScrollThread() {
     return d;
   };
 
-  // Measure parent document dimensions and generate spline (debounced to avoid scroll thrashing)
+  // Measure parent document dimensions and generate spline
   useEffect(() => {
-    let timeoutId = null;
-
     const updateDimensions = () => {
       const parent = containerRef.current?.parentElement || document.body;
-      const w = Math.max(window.innerWidth, parent.clientWidth || 375);
+      const w = Math.max(window.innerWidth, parent.clientWidth || 1440);
       const h = Math.max(window.innerHeight * 2, parent.scrollHeight || 5000);
 
       const d = generateSpline(w, h);
@@ -79,20 +74,22 @@ export default function ScrollThread() {
 
     updateDimensions();
 
-    const handleResize = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(updateDimensions, 150);
-    };
+    const resizeObserver = new ResizeObserver(() => {
+      updateDimensions();
+    });
 
-    window.addEventListener('resize', handleResize);
+    if (containerRef.current?.parentElement) {
+      resizeObserver.observe(containerRef.current.parentElement);
+    }
+    window.addEventListener('resize', updateDimensions);
 
     return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateDimensions);
     };
   }, []);
 
-  // GSAP ScrollTrigger scrub binding (active on both mobile & desktop)
+  // GSAP ScrollTrigger scrub binding
   useEffect(() => {
     const path = pathRef.current;
     if (!path || !pathData.d) return;
@@ -130,26 +127,24 @@ export default function ScrollThread() {
           trigger: parent,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.3,
+          scrub: 0.8,
           onUpdate: (self) => {
             const p = self.progress;
             const currentOffset = length * (1 - p);
             path.style.strokeDashoffset = currentOffset;
 
             // Update beacon position along the path tip
-            if (beaconRef.current) {
+            if (beaconRef.current && beaconGlowRef.current) {
               const currentDist = length * p;
               if (currentDist > 0 && currentDist <= length) {
                 const pt = path.getPointAtLength(currentDist);
                 beaconRef.current.setAttribute('cx', pt.x);
                 beaconRef.current.setAttribute('cy', pt.y);
-                beaconRef.current.style.opacity = p > 0.005 ? '1' : '0';
+                beaconRef.current.style.opacity = p > 0.008 ? '1' : '0';
 
-                if (beaconGlowRef.current) {
-                  beaconGlowRef.current.setAttribute('cx', pt.x);
-                  beaconGlowRef.current.setAttribute('cy', pt.y);
-                  beaconGlowRef.current.style.opacity = p > 0.005 ? '0.45' : '0';
-                }
+                beaconGlowRef.current.setAttribute('cx', pt.x);
+                beaconGlowRef.current.setAttribute('cy', pt.y);
+                beaconGlowRef.current.style.opacity = p > 0.008 ? '0.7' : '0';
               }
             }
           },
@@ -191,6 +186,11 @@ export default function ScrollThread() {
             <stop offset="85%" stopColor="#372C5F" stopOpacity="0.25" />
             <stop offset="100%" stopColor="#372C5F" stopOpacity="0.14" />
           </linearGradient>
+
+          {/* Beacon tip glow filter */}
+          <filter id="beaconGlowFilter" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
+          </filter>
         </defs>
 
         {/* 1. Subtle Ghost Guide Track (faint dashed architectural trace) */}
@@ -223,12 +223,12 @@ export default function ScrollThread() {
           />
         )}
 
-        {/* 3. Luminous Traveling Beacon Head (Soft halo + focal point, filter-free for 120fps hardware acceleration) */}
+        {/* 3. Luminous Traveling Beacon Head (Soft halo + focal point) */}
         <circle
           ref={beaconGlowRef}
-          r="8"
+          r="9"
           fill="#372C5F"
-          fillOpacity="0.3"
+          filter="url(#beaconGlowFilter)"
           style={{ opacity: 0, willChange: 'cx, cy, opacity' }}
         />
         <circle
