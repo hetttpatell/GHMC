@@ -276,16 +276,16 @@ const Hero = ({ introDone = false }) => {
   }, []);
 
   return (
-    <div className="hero-scroll-wrapper relative w-full overflow-x-hidden">
+    <div id="hero" className="hero-scroll-wrapper relative w-full overflow-x-hidden">
       {/* ──────────────────────────────────────────────────────────────────────────
           1. MOBILE HERO VIEW — Assembled like Reference Photo (Ario Law Mobile)
-          - Header: GHMC / 10 YEARS + Menu
+          - Header: Managed by interactive GHMC Navbar
           - Wordmark: GHMC
-          - In place of "we enjoy..." line: MANAGEMENT CONSULTANCY + BUILDING ORGANISATIONS THAT PERFORM.
+          - Headline: MANAGEMENT CONSULTANCY + BUILDING ORGANISATIONS THAT PERFORM.
           - Video (NO border)
-          - In place of "Rock the future..." line: Supporting copy ("We help organisations...") + CTA button
+          - Supporting copy ("We help organisations...") + CTA button
           ────────────────────────────────────────────────────────────────────────── */}
-      <section className="block md:hidden relative w-full min-h-screen bg-white text-black px-5 pt-6 pb-16 overflow-hidden select-none">
+      <section className="block md:hidden relative w-full min-h-screen bg-white text-black px-5 pt-24 pb-16 overflow-hidden select-none">
         {/* Floating Paths subtle background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30">
           <FloatingPathsBackground className="absolute inset-0" />
@@ -298,23 +298,6 @@ const Hero = ({ introDone = false }) => {
               'radial-gradient(ellipse at 50% 15%, rgba(55, 44, 95, 0.05) 0%, transparent 65%)',
           }}
         />
-
-        {/* 1.1 Mini Navigation Header (Matching top bar in reference photo) */}
-        <div className="relative z-10 w-full flex items-center justify-between mb-6 select-none">
-          <div className="flex flex-col items-start">
-            <span className="font-['ario-sans',sans-serif] text-base font-black tracking-[0.2em] uppercase text-[#020202]">
-              GHMC
-            </span>
-            <span className="font-['ario-sans',sans-serif] text-[9px] font-semibold tracking-[0.25em] uppercase text-black/40 -mt-0.5">
-              10 YEARS
-            </span>
-          </div>
-          <div className="flex flex-col justify-center gap-1.5 w-7 h-7 cursor-pointer p-1">
-            <span className="w-full h-[1.5px] bg-[#020202] rounded-full" />
-            <span className="w-full h-[1.5px] bg-[#020202] rounded-full" />
-            <span className="w-full h-[1.5px] bg-[#020202] rounded-full" />
-          </div>
-        </div>
 
         {/* 1.2 Prominent Wordmark (Matching giant ARIO in reference photo) */}
         <div ref={mobileWordmarkRef} className="relative z-10 mb-6 select-none will-change-transform">
@@ -419,7 +402,7 @@ const Hero = ({ introDone = false }) => {
         <div
           className="absolute z-10 pointer-events-none flex flex-col justify-center text-left"
           style={{
-            top: 'clamp(50px, 8vh, 100px)',
+            top: 'clamp(110px, 13vh, 150px)',
             right: 'clamp(24px, 5vw, 84px)',
           }}
         >

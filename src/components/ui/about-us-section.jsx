@@ -420,11 +420,22 @@ export default function AboutUsSection() {
               .map((service, index) => (
                 <div
                   key={`left-${index}`}
-                  className="service-item-clean flex flex-col"
+                  className="service-item-clean flex flex-col rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(55,44,95,0.04) 0%, rgba(55,44,95,0.02) 50%, rgba(255,255,255,0.6) 100%)',
+                    border: '1px solid rgba(55,44,95,0.10)',
+                    boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.7), 0 1px 3px rgba(55,44,95,0.06), 0 4px 12px rgba(55,44,95,0.04)',
+                  }}
                 >
                   {/* Icon & Title Row */}
                   <div className="flex items-center gap-4 mb-3">
-                    <div className="w-12 h-12 rounded-xl bg-[#372C5F] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#372C5F]/20">
+                    <div
+                      className="w-12 h-12 rounded-xl text-white flex items-center justify-center shrink-0"
+                      style={{
+                        background: 'linear-gradient(145deg, #4a3d73 0%, #372C5F 60%, #2a2149 100%)',
+                        boxShadow: '0 2px 8px rgba(55,44,95,0.30), 0 0 0 1px rgba(55,44,95,0.15), inset 0 1px 0 rgba(255,255,255,0.12)',
+                      }}
+                    >
                       <div className="service-icon-svg flex items-center justify-center will-change-transform">
                         {service.icon}
                       </div>
@@ -514,11 +525,22 @@ export default function AboutUsSection() {
               .map((service, index) => (
                 <div
                   key={`right-${index}`}
-                  className="service-item-clean flex flex-col"
+                  className="service-item-clean flex flex-col rounded-2xl p-5 transition-all duration-300 ease-out hover:-translate-y-1"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(55,44,95,0.04) 0%, rgba(55,44,95,0.02) 50%, rgba(255,255,255,0.6) 100%)',
+                    border: '1px solid rgba(55,44,95,0.10)',
+                    boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.7), 0 1px 3px rgba(55,44,95,0.06), 0 4px 12px rgba(55,44,95,0.04)',
+                  }}
                 >
                   {/* Icon & Title Row */}
                   <div className="flex items-center gap-4 mb-3">
-                    <div className="w-12 h-12 rounded-xl bg-[#372C5F] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#372C5F]/20">
+                    <div
+                      className="w-12 h-12 rounded-xl text-white flex items-center justify-center shrink-0"
+                      style={{
+                        background: 'linear-gradient(145deg, #4a3d73 0%, #372C5F 60%, #2a2149 100%)',
+                        boxShadow: '0 2px 8px rgba(55,44,95,0.30), 0 0 0 1px rgba(55,44,95,0.15), inset 0 1px 0 rgba(255,255,255,0.12)',
+                      }}
+                    >
                       <div className="service-icon-svg flex items-center justify-center will-change-transform">
                         {service.icon}
                       </div>
@@ -580,11 +602,22 @@ export default function AboutUsSection() {
             {services.map((service, index) => (
               <div
                 key={`mob-${index}`}
-                className="service-item-clean flex flex-col justify-between p-3.5 sm:p-5 rounded-2xl bg-white/85 border border-[#372C5F]/10 shadow-xs backdrop-blur-xs"
+                className="service-item-clean flex flex-col justify-between p-3.5 sm:p-5 rounded-2xl backdrop-blur-sm"
+                style={{
+                  background: 'linear-gradient(145deg, rgba(55,44,95,0.05) 0%, rgba(255,255,255,0.85) 40%, rgba(55,44,95,0.03) 100%)',
+                  border: '1px solid rgba(55,44,95,0.12)',
+                  boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.8), 0 1px 4px rgba(55,44,95,0.08), 0 4px 16px rgba(55,44,95,0.05)',
+                }}
               >
                 <div>
                   {/* Icon Badge */}
-                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#372C5F] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#372C5F]/20 mb-2.5">
+                  <div
+                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl text-white flex items-center justify-center shrink-0 mb-2.5"
+                    style={{
+                      background: 'linear-gradient(145deg, #4a3d73 0%, #372C5F 60%, #2a2149 100%)',
+                      boxShadow: '0 2px 6px rgba(55,44,95,0.30), inset 0 1px 0 rgba(255,255,255,0.10)',
+                    }}
+                  >
                     <div className="service-icon-svg flex items-center justify-center will-change-transform">
                       {service.icon}
                     </div>

@@ -3,7 +3,7 @@
 @font-face {
   font-family: 'ario-sans';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600 900;
   font-display: swap;
   src: url('/fonts/Helvetica/Helvetica-Bold.woff') format('woff');
 }
@@ -11,7 +11,7 @@
 @font-face {
   font-family: 'ario-sans';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 500;
   font-display: swap;
   src: url('/fonts/Helvetica/Helvetica-Regular.woff') format('woff');
 }
@@ -19,7 +19,7 @@
 @font-face {
   font-family: 'ario-sans';
   font-style: normal;
-  font-weight: 300;
+  font-weight: 100 300;
   font-display: swap;
   src: url('/fonts/Helvetica/Helvetica-Light.woff') format('woff');
 }
