@@ -257,8 +257,8 @@ export default function AboutUsSection() {
       }
 
       // 5. ─── PARALLAX ANIMATION ON MIDDLE CARD AND OTHER CARDS (Desktop Only for Peak Mobile Performance) ───
-      const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-      if (!prefersReducedMotion && gridRef.current && isDesktop) {
+      const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches;
+      if (!prefersReducedMotion && gridRef.current && isLargeScreen) {
         // Middle Card Parallax: Moves upward smoothly as the user scrolls through the grid
         if (centerCardRef.current) {
           gsap.to(centerCardRef.current, {
