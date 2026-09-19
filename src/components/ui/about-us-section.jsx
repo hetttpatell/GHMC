@@ -105,10 +105,11 @@ export default function AboutUsSection() {
     ScrollTrigger.refresh();
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
 
     const ctx = gsap.context(() => {
-      // 1. Ambient continuous floating dots
-      if (!prefersReducedMotion) {
+      // 1. Ambient continuous floating dots & parallax (Desktop only for max mobile scroll performance)
+      if (!prefersReducedMotion && isDesktop) {
         if (floatDot1Ref.current) {
           gsap.to(floatDot1Ref.current, {
             y: -16,

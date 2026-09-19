@@ -108,3 +108,15 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ─── Mobile Performance Optimizations ─── */
+@media (max-width: 767px) {
+  /* Prevent heavy multi-layer blur from stalling GPU fillrate during mobile touch scroll */
+  .blur-3xl {
+    filter: blur(18px) !important;
+  }
+  .blur-2xl {
+    filter: blur(12px) !important;
+  }
+}
+

@@ -61,8 +61,10 @@ export default function ScrollThread() {
     return d;
   };
 
-  // Measure parent document dimensions and generate spline
+  // Measure parent document dimensions and generate spline (desktop only)
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
+
     const updateDimensions = () => {
       const parent = containerRef.current?.parentElement || document.body;
       const w = Math.max(window.innerWidth, parent.clientWidth || 1440);
@@ -89,8 +91,9 @@ export default function ScrollThread() {
     };
   }, []);
 
-  // GSAP ScrollTrigger scrub binding
+  // GSAP ScrollTrigger scrub binding (desktop only)
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
     const path = pathRef.current;
     if (!path || !pathData.d) return;
 
@@ -165,7 +168,7 @@ export default function ScrollThread() {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none absolute inset-0 w-full h-full z-0 overflow-hidden select-none"
+      className="hidden md:block pointer-events-none absolute inset-0 w-full h-full z-0 overflow-hidden select-none"
       aria-hidden="true"
     >
       <svg

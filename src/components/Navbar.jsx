@@ -41,40 +41,50 @@ export default function Navbar({ introDone = true }) {
     }
   };
 
-  // ScrollSpy: Automatically detects and highlights the current section in the viewport
+  // ScrollSpy: Automatically detects and highlights the current section in the viewport (throttled)
   useEffect(() => {
+    let ticking = false;
+
     const handleScrollSpy = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const windowHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
+      if (ticking) return;
+      ticking = true;
 
-      // When near bottom of document, activate Contact
-      if (scrollY + windowHeight >= docHeight - 90) {
-        setActiveSection("#contact");
-        return;
-      }
+      window.requestAnimationFrame(() => {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
 
-      // When at top of document, activate Home
-      if (scrollY < 220) {
-        setActiveSection("#hero");
-        return;
-      }
+        // When near bottom of document, activate Contact
+        if (scrollY + windowHeight >= docHeight - 90) {
+          setActiveSection("#contact");
+          ticking = false;
+          return;
+        }
 
-      const sectionIds = ["hero", "impact", "who-we-are", "case-studies", "contact"];
-      const triggerOffset = 250; // Visual threshold line below navbar
+        // When at top of document, activate Home
+        if (scrollY < 220) {
+          setActiveSection("#hero");
+          ticking = false;
+          return;
+        }
 
-      // Loop from bottom-most section upwards to find the first section whose top passed triggerOffset
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const id = sectionIds[i];
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= triggerOffset) {
-            setActiveSection(`#${id}`);
-            break;
+        const sectionIds = ["hero", "impact", "who-we-are", "case-studies", "contact"];
+        const triggerOffset = 250; // Visual threshold line below navbar
+
+        // Loop from bottom-most section upwards to find the first section whose top passed triggerOffset
+        for (let i = sectionIds.length - 1; i >= 0; i--) {
+          const id = sectionIds[i];
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= triggerOffset) {
+              setActiveSection(`#${id}`);
+              break;
+            }
           }
         }
-      }
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", handleScrollSpy, { passive: true });

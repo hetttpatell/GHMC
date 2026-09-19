@@ -32,6 +32,9 @@ function FloatingPaths({ position = 1 }) {
   }, [position]);
 
   useEffect(() => {
+    // Disable continuous 72-path GSAP animations on mobile (< 768px) to ensure butter smooth scrolling
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
+
     const svg = svgRef.current;
     if (!svg) return;
     const pathEls = svg.querySelectorAll('path');

@@ -67,24 +67,10 @@ function EditorialCaseStudy({ item, isBookmarked, onToggleBookmark }) {
           <img
             src={item.image}
             alt={item.headline}
-            className="w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] will-change-transform"
+            className="w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
             loading="lazy"
+            decoding="async"
           />
-
-          {/* Impact Metric Floating Badge */}
-          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
-            <span
-              className="inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-[2px] text-[9px] sm:text-[10.5px] font-mono font-bold tracking-wider uppercase shadow-sm"
-              style={{
-                backgroundColor: 'rgba(2, 2, 2, 0.78)',
-                backdropFilter: 'blur(8px)',
-                color: '#C9B887',
-                border: '1px solid rgba(201, 184, 135, 0.3)',
-              }}
-            >
-              {item.metric}
-            </span>
-          </div>
         </a>
 
         {/* ── Sector Eyebrow (Brand Purple #372C5F) ── */}
